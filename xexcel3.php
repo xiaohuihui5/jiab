@@ -40,11 +40,18 @@ while($line=sqlsrv_fetch_array($result))
 {
 	if($line[1].$line[2]!=$heb && $heb!="")//纵向合并
 	{
-		$heb_tmp=$row+$first_blank_row;
+		//if($mid>1)
+		//	$heb_tmp=$row+$first_blank_row+1;
+		//else
+			$heb_tmp=$row+$first_blank_row;
 		$objPHPExcel->getActiveSheet()->mergeCells('A'.$heb_beg.':A'.$heb_tmp);
 		$objPHPExcel->getActiveSheet()->getStyle('A'.$heb_beg.':A'.$heb_tmp)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);//垂直居中
-		$heb_beg=$heb_tmp+1;
+		if($mid>1)
+			$heb_beg=$heb_tmp+2;
+		else
+			$heb_beg=$heb_tmp+1;
 	}
+
 	$row=$row+1;$tmp=$row+$first_blank_row;$heb_tmp=$row+$first_blank_row;
 	if($tp1!=$line[1].$line[2] && $tp1!="" && $mid>1)//插入小计_beg
 	{
@@ -59,7 +66,7 @@ while($line=sqlsrv_fetch_array($result))
 			else
 				$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',''));
 		}
-	$row=$row+1;$tmp=$row+$first_blank_row;$heb_tmp=$row+$first_blank_row;
+	$row=$row+1;$tmp=$row+$first_blank_row;$heb_tmp=$row+$first_blank_row+1;
 		for($i=1;$i<$Column;$i++)
 		{
 			$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',$line[$i]));
@@ -81,7 +88,12 @@ while($line=sqlsrv_fetch_array($result))
 		for($i=1;$i<$Column;$i++)
 		{
 			$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',$line[$i]));
-			if($HJ[$i]==1)
+			if($HJ[$i]==1 && $tp1!=$line[1].$line[2])
+			{
+			$ZJ[$i]+=$line[$i];
+			$XJ[$i]=$line[$i];
+			}	
+			else
 			{
 			$ZJ[$i]+=$line[$i];
 			$XJ[$i]+=$line[$i];
@@ -139,7 +151,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A'.$first_blank_row.':'.$lie[$Column-1
 
 $first_blank_row+=1;//取第一行数据值的宽度作为每列宽度
 $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setAutoSize(true);//自动宽度
-for($i=2;$i<$Column;$i++)
+for($i=1;$i<$Column;$i++)
 {
 	$value=$objPHPExcel->getActiveSheet()->getCell($lie[$i].$first_blank_row)->getValue();
 	$width=4+mb_strwidth($value);//Return the width of the string

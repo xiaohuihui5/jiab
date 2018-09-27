@@ -28,7 +28,7 @@ if (isset($_POST['mc']))//lur指的是录入的数据是那个分公司的,chax指有权限查询的公
 	$kuozm='.'.array_pop(explode('.',basename($_FILES['upfile']['name'])));//扩展名
 	if(move_uploaded_file($_FILES['upfile']['tmp_name'],$uploaddir.$uploadfile.'_'.$kuozm))
 	{
-		$query="insert into sys_cp(yn,bh,mc,typeb,typec,typea,dw,gg,huansz,piny,miaos,img) select 1,'".$code."',rtrim(ltrim('".$_POST['mc']."')),typeb,".$_POST['typec'].",".$_POST['typea'].",rtrim(ltrim('".$_POST['dw']."')),rtrim(ltrim('".$_POST['gg']."')),rtrim(ltrim(".$_POST['gg2'].")),'".Get_Piny($_POST['mc'])."',rtrim(ltrim('".$_POST['miaos']."')),'".$uploadfile.$kuozm."' from sys_cpxfl where id=".$_POST['typec'];
+		$query="insert into sys_cp(yn,bh,mc,typeb,typec,typea,dw,gg,huansz,piny,miaos,img) select 1,'".$code."',rtrim(ltrim('".$_POST['mc']."')),typeb,".$_POST['typec'].",".$_POST['typea'].",rtrim(ltrim('".$_POST['dw']."')),rtrim(ltrim('".$_POST['gg']."')),rtrim(ltrim(".$_POST['gg2'].")),'".Get_Piny($_POST['mc'])."',rtrim(ltrim('".$_POST['miaos']."')),'".$uploadfile.'_'.$kuozm."' from sys_cpxfl where id=".$_POST['typec'];
 		include("./inc/xexec.php");
 		$resizeimage = new resizeimage("upfile/cpimg/".$uploadfile.'_'.$kuozm,"224","300","0","upfile/cpimg/".$uploadfile.$kuozm);
 	}
@@ -39,7 +39,6 @@ if (isset($_POST['mc']))//lur指的是录入的数据是那个分公司的,chax指有权限查询的公
 	}
 	if($res)
 		echo "<script language=javascript>window.parent.Frm.submit();//parent.layer.msg('操作成功！',{icon:1,time:1500});//parent.layer.closeAll();</script>";//提示成功退出
-
 }
 //解决名称、编号重复
 $nowname=",";
