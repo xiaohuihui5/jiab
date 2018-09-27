@@ -1,0 +1,8 @@
+#default github
+Host github.com
+HostName github.com
+IdentityFile ~/.ssh/github_rsa
+
+Host gitee.com
+HostName gitee.com
+IdentifyFile ~/.ssh/gitee.rsa

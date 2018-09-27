@@ -3,6 +3,7 @@ require('./inc/xhead.php');
 if($_POST['id']!=0)
 {
 	$query = "select cp.id,cp.mc,cp.dw from sys_cp cp where cp.yn=1 and cp.id=".$_POST['id'];//直接根据id选一个
+	$b=$query;
 	$result=sqlsrv_query($conn,$query);
 	$cpid=0;
 	$cpmc="";
@@ -19,6 +20,7 @@ else//模糊选取一个
 {
 	$str=iconv("UTF-8","GBK",$_POST["spbh"]);
 	$query = "select top 1 cp.id,cp.mc,cp.dw from sys_cp cp where cp.yn=1 and isnull(cp.bh,'')+cp.mc+isnull(cp.piny,'') like '%".$str."%'  order by cp.bh";
+$c=$query;
 	$result=sqlsrv_query($conn,$query);
 	if($line=sqlsrv_fetch_array($result))
 	{

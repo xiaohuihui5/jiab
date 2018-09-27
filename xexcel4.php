@@ -38,106 +38,21 @@ $result=sqlsrv_query($conn,$query);
 $row=0;$heb="";$heb_beg=$first_blank_row+1;$tp1="";$mid=1;$mid2=1;$tmp=0;
 while($line=sqlsrv_fetch_array($result))
 {
-	if($line[1].$line[2]!=$heb && $heb!="")//纵向合并
+	if($line[1]!=$heb && $heb!="")//纵向合并
 	{
-		//if($mid>1)
-		//	$heb_tmp=$row+$first_blank_row+1;
-		//else
-			$heb_tmp=$row+$first_blank_row;
+		$heb_tmp=$row+$first_blank_row;
 		$objPHPExcel->getActiveSheet()->mergeCells('A'.$heb_beg.':A'.$heb_tmp);
 		$objPHPExcel->getActiveSheet()->getStyle('A'.$heb_beg.':A'.$heb_tmp)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);//垂直居中
-		if($mid>1)
-			$heb_beg=$heb_tmp+2;
-		else
-			$heb_beg=$heb_tmp+1;
+		$heb_beg=$heb_tmp+1;
 	}
 
 	$row=$row+1;$tmp=$row+$first_blank_row;$heb_tmp=$row+$first_blank_row;
-	if($tp1!=$line[1].$line[2] && $tp1!="" && $mid>1)//插入小计_beg
-	{
-		$objPHPExcel->getActiveSheet()->getStyle('A'.$tmp.':'.$lie[$Column-1].$tmp)->getFont()->setBold(true);//字体加粗
-		$objPHPExcel->getActiveSheet()->mergeCells('A'.$tmp.':'.$lie[$HJ[0]].$tmp);//小计合并
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$tmp,iconv('gbk','utf-8',$tp1.'小计'));
-		$objPHPExcel->getActiveSheet()->getStyle('A'.$tmp.':'.$lie[$Column-1].$tmp)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		for($i=$HJ[0]+1;$i<$Column;$i++)
-		{
-			if($HJ[$i]==1)
-				$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',$XJ[$i]));
-			else
-				$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',''));
-		}
-	$row=$row+1;$tmp=$row+$first_blank_row;$heb_tmp=$row+$first_blank_row+1;
-		for($i=1;$i<$Column;$i++)
-		{
-			$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',$line[$i]));
-			if($HJ[$i]==1)
-			{
-				$ZJ[$i]+=$line[$i];
-				$XJ[$i]=$line[$i];
-			}	
-		}
-	$mid=1;
-	$mid2=2;//标示如果只有一个小计的时候就不用显示小计直接显示合计
-	}//插入小计_end
-	else
-	{
-		if($tp1!=$line[1].$line[2])
-			$mid=1;
-		else
-			$mid+=1;
-		for($i=1;$i<$Column;$i++)
-		{
-			$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',$line[$i]));
-			if($HJ[$i]==1 && $tp1!=$line[1].$line[2])
-			{
-			$ZJ[$i]+=$line[$i];
-			$XJ[$i]=$line[$i];
-			}	
-			else
-			{
-			$ZJ[$i]+=$line[$i];
-			$XJ[$i]+=$line[$i];
-			}	
-		}
-	}
-	$tp1=$line[1].$line[2];
-	$heb=$line[1].$line[2];
+	for($i=1;$i<$Column;$i++)
+		$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',$line[$i]));
+	$heb=$line[1];
 }
 sqlsrv_free_stmt($result);
 
-if($row>0)
-{
-	if($mid>1 && $mid2>1)
-	{
-	$row=$row+1;$tmp=$row+$first_blank_row;
-	$objPHPExcel->getActiveSheet()->getStyle('A'.$tmp.':'.$lie[$Column-1].$tmp)->getFont()->setBold(true);//字体加粗
-	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$tmp,iconv('gbk','utf-8',$tp1.'小计'));
-	$objPHPExcel->getActiveSheet()->mergeCells('A'.$tmp.':'.$lie[$HJ[0]].$tmp);//小计合并
-	$objPHPExcel->getActiveSheet()->getStyle('A'.$tmp.':'.$lie[$Column-1].$tmp)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-		for($i=$HJ[0]+1;$i<$Column;$i++)
-		{
-			if($HJ[$i]==1)
-				$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',$XJ[$i]));
-			else
-				$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',''));
-		}
-	}
-	$tmp=$row+$first_blank_row;
-	$tmp=$tmp+1;
-	$objPHPExcel->getActiveSheet()->getStyle('A'.$tmp.':'.$lie[$Column-1].$tmp)->getFont()->setBold(true);//字体加粗
-	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$tmp,iconv('gbk','utf-8','合 计'));
-	$objPHPExcel->getActiveSheet()->mergeCells('A'.$tmp.':'.$lie[$HJ[0]].$tmp);//合并
-	$objPHPExcel->getActiveSheet()->getStyle('A'.$tmp.':'.$lie[$Column-1].$tmp)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-	for($i=$HJ[0]+1;$i<$Column;$i++)
-	{
-		if($HJ[$i]==1)
-			$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',$ZJ[$i]));
-		else
-			$objPHPExcel->getActiveSheet()->setCellValue($lie[$i].$tmp,iconv('gbk','utf-8',''));
-	}
-}
 
 $styleThinBlackBorderOutline = array(
 	'borders' => array(

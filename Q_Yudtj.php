@@ -23,7 +23,7 @@ $lur.='<input name="paix" id="paix" type="hidden"> <input type="text" class="inp
 $lnk='<span class="l"><a href="'.$xiam.'.php"  class="btn radius"><img border=0 src=im/zhuy.png> 按产品汇总</a>
 <a href="Q_Bianzjh.php"  class="btn radius"> 边猪统计</a>
 <a href="javascript:openwindow2(\'Q_Yudtj_b.php\',window.screen.availWidth,window.screen.availHeight)" class="btn radius"> 订货汇总表</a> </span>';
-$lnk.='<span class="r"> <a href="xExcel3.php" class="btn radius"><img border=0 src=im/daoc.png>导出</a> <a href="javascript:openwindow(\'xPrint.php\',850,500)" class="btn radius"><img border=0 src=im/dy.png>打印</a> </span> ';
+$lnk.='<span class="r"> <a href="xExcel3.php" class="btn radius"><img border=0 src=im/daoc.png>导出</a> <a href="xExcel4.php" class="btn radius"><img border=0 src=im/daoc.png>导出无小计</a> <a href="javascript:openwindow(\'xPrint.php\',850,500)" class="btn radius"><img border=0 src=im/dy.png>打印</a> </span> ';
 $cha='';
 $lie=',标准品名,单位,订货量,客户,客户品名,规格,单位,订货量,备注';
 $wid=',15%,4%,10%,20%,15%,6%,4%,10%,16%';
