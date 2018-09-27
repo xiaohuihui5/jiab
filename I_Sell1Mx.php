@@ -62,7 +62,7 @@ if($menuright>1 and $dh_zt==0)//录入
 $lur='
 <table class="hetable" align="center" style="width:70%"><form action="'.$xiam.'1.php" target="hqlist" method="post" name="IFrm">
 <tr>
-<td algin=center onclick="SelCp(2)"><div class="text-c"><font color=blue>产品搜索</font>[F9]</div></td>
+<td algin=center onclick="SelCp(3)"><div class="text-c"><font color=blue>产品搜索</font>[F9]</div></td>
 <td algin=center><div class="text-c">产品名称</div></td>
 <td algin=center><div class="text-c">单位</div></td>
 <td algin=center><div class="text-c">客户品名</div></td>

@@ -31,10 +31,10 @@ if (isset($_POST['mc']))
 	if(move_uploaded_file($_FILES['upfile']['tmp_name'],$uploaddir.$uploadfile.'_'.$kuozm))
 	{
 		if($_POST['otypec']!=$_POST['typec'])//分类变动后,编号自动生成对应分类编号
-			$query="update sys_cp set typeb=".$upfenl.",bh=rtrim(ltrim('".$code."')),mc=rtrim(ltrim('".$_POST['mc']."')),piny='".Get_Piny($_POST['mc'])."',dw=rtrim(ltrim('".$_POST['dw']."')),gg=rtrim(ltrim('".$_POST['gg']."')),huansz=rtrim(ltrim(".$_POST['gg2'].")),typec=".$_POST['typec'].",typea=".$_POST['typea'].",yn=".$_POST['yn'].",miaos=rtrim(ltrim('".$_POST['miaos']."')),img='".$uploadfile.$kuozm."' where id=".$_POST['eid'];
+			$query="update sys_cp set typeb=".$upfenl.",bh=rtrim(ltrim('".$code."')),mc=rtrim(ltrim('".$_POST['mc']."')),piny='".Get_Piny($_POST['mc'])."',dw=rtrim(ltrim('".$_POST['dw']."')),gg=rtrim(ltrim('".$_POST['gg']."')),huansz=rtrim(ltrim(".$_POST['gg2'].")),typec=".$_POST['typec'].",typea=".$_POST['typea'].",yn=".$_POST['yn'].",miaos=rtrim(ltrim('".$_POST['miaos']."')),img='".$uploadfile.'_'.$kuozm."' where id=".$_POST['eid'];
 		else
-			$query="update sys_cp set typeb=".$upfenl.",mc=rtrim(ltrim('".$_POST['mc']."')),piny='".Get_Piny($_POST['mc'])."',dw=rtrim(ltrim('".$_POST['dw']."')),gg=rtrim(ltrim('".$_POST['gg']."')),huansz=rtrim(ltrim(".$_POST['gg2'].")),typec=".$_POST['typec'].",typea=".$_POST['typea'].",yn=".$_POST['yn'].",miaos=rtrim(ltrim('".$_POST['miaos']."')),img='".$uploadfile.$kuozm."' where id=".$_POST['eid'];
-			include("./inc/xexec.php");
+			$query="update sys_cp set typeb=".$upfenl.",mc=rtrim(ltrim('".$_POST['mc']."')),piny='".Get_Piny($_POST['mc'])."',dw=rtrim(ltrim('".$_POST['dw']."')),gg=rtrim(ltrim('".$_POST['gg']."')),huansz=rtrim(ltrim(".$_POST['gg2'].")),typec=".$_POST['typec'].",typea=".$_POST['typea'].",yn=".$_POST['yn'].",miaos=rtrim(ltrim('".$_POST['miaos']."')),img='".$uploadfile.'_'.$kuozm."' where id=".$_POST['eid'];
+		include("./inc/xexec.php");
 		$resizeimage = new resizeimage("upfile/cpimg/".$uploadfile.'_'.$kuozm,"224","300","0","upfile/cpimg/".$uploadfile.$kuozm);
 	}
 	else

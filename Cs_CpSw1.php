@@ -9,7 +9,7 @@ if(isset($_POST['fenlmc']) && $_POST['fenlmc']!="")
 {
 	$_POST['bil']=$_POST['bil']==""?"0":"".$_POST['bil']."";
 	$query="insert into sys_cpyfl(bianh,fenlmc,bil,yn) values('".$_POST['bianh']."','".$_POST['fenlmc']."',".$_POST['bil'].",1)";
-	require("./inc/xexec.php");	
+	require("./inc/xexec.php");
 }
 $ed_row=0;
 if(isset($_POST['edtrow']) and $_POST['edtrow']!=0)
